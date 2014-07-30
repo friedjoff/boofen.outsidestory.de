@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Boofen</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='leaflet.js'></script>
+<script src='boofen.js'></script>
+<link href='leaflet.css' rel='stylesheet' />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<div id='map'></div>
+<script>
+
+var map = L.map('map', {
+    attributionControl: false
+  })
+  .setView([50.9212, 14.2122], 12);
+
+L.geoJson(boofen, {
+    onEachFeature: function(feature, layer) {
+      layer.bindPopup(feature.properties.name);
+    }
+  }).addTo(map);
+
+L.tileLayer('https://{s}.tiles.mapbox.com/v3/outsidestory.j3e1bai6/{z}/{x}/{y}.png', {
+  detectRetina: true
+}).addTo(map);
+
+map.on('locationfound', function(e) {
+  var radius = e.accuracy / 2;
+  L.circle(e.latlng, radius).addTo(map);
+});
+
+if (L.Browser.mobile) {
+  map.locate({setView: true, maxZoom: 16});
+}
+
+</script>
+</body>
+</html>
