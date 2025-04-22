@@ -27,9 +27,7 @@ L.geoJson(boofen, {
     }
   }).addTo(map);
 
-L.tileLayer('https://{s}.tiles.mapbox.com/v3/outsidestory.j3e1bai6/{z}/{x}/{y}.png', {
-  detectRetina: true
-}).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 map.on('locationfound', function(e) {
   var radius = e.accuracy / 2;
